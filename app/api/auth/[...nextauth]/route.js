@@ -8,7 +8,7 @@ export const authOptions = {
   providers: [
     CredentialsProviders({
       name: "credentails",
-      credentails: {},
+      credentials: {},
       async authorize(credentails) {
         try {
           const { email, password } = credentails;
