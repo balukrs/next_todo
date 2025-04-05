@@ -1,4 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { ToastContainer, Zoom } from "react-toastify";
+import { AuthProvider } from "./Providers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,7 +24,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ToastContainer
+          closeButton
+          transition={Zoom}
+          icon
+          theme="dark"
+          hideProgressBar
+        />
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
