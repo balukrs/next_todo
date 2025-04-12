@@ -15,15 +15,10 @@ export const connectMongoDB = async () => {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then((mongoose) => {
-        console.log("Connected to Database");
-        return mongoose;
-      });
+    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
+      console.log("Connected to Database");
+      return mongoose;
+    });
   }
 
   cached.conn = await cached.promise;

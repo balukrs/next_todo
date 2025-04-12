@@ -3,20 +3,27 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useFetch } from "@/utils/hooks/useFetch";
+import { useFetch } from "../utils/hooks/useFetch";
 import { BeatLoader } from "react-spinners";
-import Notifications from "@/utils/Notification";
+import Notifications from "../utils/Notification";
+
+type FormValues = {
+  password: string,
+  email: string,
+  name:string,
+  confirmPassword:string
+}
 
 function Register() {
   const router = useRouter();
-  const { fetchData, isLoading, error } = useFetch();
+  const { fetchData, isLoading } = useFetch();
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValues>();
 
   const password = watch("password");
 

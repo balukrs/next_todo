@@ -1,9 +1,9 @@
 "use client";
 
-import { toast, Bounce } from "react-toastify";
+import { toast, Bounce, ToastOptions } from 'react-toastify';
 
-const toastConfig = {
-  position: "top-right",
+const toastConfig: ToastOptions = {
+  position: 'top-right',
   autoClose: 5000,
   pauseOnFocusLoss: true,
   hideProgressBar: false,
@@ -12,12 +12,13 @@ const toastConfig = {
   draggable: false,
   transition: Bounce,
 };
-// info, success, warning, error, default
-const Notifications = (message = null, type = "default", config = {}) => {
+
+type NotificationType = 'info' | 'success' | 'warning' | 'error' | 'default';
+
+const Notifications = (message: string | null = null, type: NotificationType = 'default'): void => {
   if (!message) return;
   toast(message, {
     ...toastConfig,
-    ...config,
     type,
     toastId: message,
   });

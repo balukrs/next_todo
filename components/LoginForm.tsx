@@ -2,8 +2,13 @@
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import Notifications from "@/utils/Notification";
+import Notifications from "../utils/Notification";
 import { useRouter } from "next/navigation";
+
+type FormValues = {
+  password: string,
+  email: string
+}
 
 function Login() {
   const router = useRouter();
@@ -12,7 +17,7 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValues>();
 
   const onSubmit = async (data) => {
     const { email, password } = data;
