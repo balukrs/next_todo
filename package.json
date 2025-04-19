@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -36,11 +36,12 @@
     "typescript": "^5.8.3"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --max-warnings=0 --fix"
-    ],
     "*.{ts,tsx}": [
-      "tsc --noEmit"
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx,json,css,md}": [
+      "prettier --write"
     ]
   }
 }

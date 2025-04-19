@@ -14,7 +14,7 @@ type FormValues = {
   confirmPassword: string;
 };
 
-function Register() {
+function Register(): React.ReactElement {
   const router = useRouter();
   const { fetchData, isLoading } = useFetch();
 
@@ -27,7 +27,7 @@ function Register() {
 
   const password = watch('password');
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues): Promise<undefined> => {
     const { name, email, password, confirmPassword } = data;
     const response = await fetchData('api/register', {
       method: 'POST',
@@ -37,10 +37,10 @@ function Register() {
       body: JSON.stringify({ name, email, password, confirmPassword }),
     });
 
-    if (response?.success) {
+    if (response?.success != null) {
       Notifications(response.message, 'success');
       router.push('/');
-    } else {
+    } else if (response?.message != null) {
       Notifications(response.message, 'error');
     }
   };
@@ -86,15 +86,15 @@ function Register() {
           >
             {isLoading ? <BeatLoader /> : 'Submit'}
           </button>
-          {(errors?.name?.message ||
-            errors?.email?.message ||
-            errors?.password?.message ||
-            errors?.confirmPassword?.message) && (
+          {(errors?.name?.message != null ||
+            errors?.email?.message != null ||
+            errors?.password?.message != null ||
+            errors?.confirmPassword?.message != null) && (
             <span className=" text-red-400">
-              {errors?.name?.message ||
-                errors?.email?.message ||
-                errors?.password?.message ||
-                errors?.confirmPassword?.message ||
+              {(errors?.name?.message != null && errors?.name?.message) ||
+                (errors?.email?.message != null && errors?.email?.message) ||
+                (errors?.password?.message != null && errors?.password?.message) ||
+                (errors?.confirmPassword?.message != null && errors?.confirmPassword?.message) ||
                 'Error Occured'}
             </span>
           )}

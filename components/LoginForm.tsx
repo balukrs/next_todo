@@ -10,7 +10,7 @@ type FormValues = {
   email: string;
 };
 
-function Login() {
+function Login(): React.ReactElement {
   const router = useRouter();
 
   const {
@@ -19,7 +19,7 @@ function Login() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormValues): Promise<undefined | null> => {
     const { email, password } = data;
     try {
       const response = await signIn('credentials', {
@@ -28,7 +28,7 @@ function Login() {
         redirect: false,
       });
 
-      if (response.error) {
+      if (response && response.error == null) {
         Notifications('Invalid Credentials', 'error');
         return;
       }
@@ -63,9 +63,11 @@ function Login() {
           <button className=" bg-blue-900 rounded py-2 mt-2 cursor-pointer font-bold" type="submit">
             Submit
           </button>
-          {(errors?.email?.message || errors?.password?.message) && (
+          {(errors?.email?.message != null || errors?.password?.message != null) && (
             <span className=" text-red-400">
-              {errors?.email?.message || errors?.password?.message || 'Error Occured'}
+              {(errors?.email?.message != null && errors?.email?.message) ||
+                (errors?.password?.message != null && errors?.password?.message) ||
+                'Error Occured'}
             </span>
           )}
 

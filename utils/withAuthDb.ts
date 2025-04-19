@@ -4,18 +4,18 @@ import { connectMongoDB } from '../lib/mongodb';
 import { errorResponse } from './response';
 import { NextResponse } from 'next/server';
 
-const withAuthDB = (handler: (req: Request) => Promise<NextResponse>) => async (req: Request) => {
-  const authHead = req.headers.get('Authorization');
+const withAuthDB =
+  (handler: (req: Request) => Promise<NextResponse>) =>
+  async (req: Request): Promise<NextResponse> => {
+    const session = await getServerSession(authOptions);
 
-  const session = await getServerSession(authOptions);
+    if (!session) {
+      return errorResponse({ message: 'Unauthorized' }, 401);
+    }
 
-  if (!session) {
-    return errorResponse({ message: 'Unauthorized' }, 401);
-  }
+    await connectMongoDB();
 
-  await connectMongoDB();
-
-  return handler(req);
-};
+    return handler(req);
+  };
 
 export default withAuthDB;

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
-function Header() {
+function Header(): React.ReactElement {
   const pathname = usePathname();
   const [showDrop, setShowDrop] = useState(false);
 
@@ -18,7 +18,7 @@ function Header() {
         <ul className="flex gap-3">
           <Link
             className={`hover:text-cyan-300 cursor-pointer ${
-              pathname === "/home" && " font-bold text-blue-700"
+              pathname === '/home' && ' font-bold text-blue-700'
             }`}
             href="/home"
           >
@@ -26,7 +26,7 @@ function Header() {
           </Link>
           <Link
             className={`hover:text-cyan-300 cursor-pointer ${
-              pathname === "/completed" && " font-bold text-blue-700"
+              pathname === '/completed' && ' font-bold text-blue-700'
             }`}
             href="/completed"
           >
@@ -34,7 +34,7 @@ function Header() {
           </Link>
           <Link
             className={`hover:text-cyan-300 cursor-pointer ${
-              pathname === "/archive" && " font-bold text-blue-700"
+              pathname === '/archive' && ' font-bold text-blue-700'
             }`}
             href="/archive"
           >
@@ -52,19 +52,14 @@ function Header() {
 
         <ul
           className={`bg-blue-400 absolute top-0 translate-y-10 shadow shadow-blue-900 px-6 right-0 py-4 flex flex-col gap-1 text-cyan-700 transition-all duration-300 ease-out ${
-            showDrop
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-90 pointer-events-none"
+            showDrop ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
           }`}
           onMouseLeave={() => setShowDrop(false)}
         >
           <Link className="hover:text-cyan-900 cursor-pointer" href="/profile">
             Profile
           </Link>
-          <li
-            className="hover:text-cyan-900 cursor-pointer"
-            onClick={() => signOut()}
-          >
+          <li className="hover:text-cyan-900 cursor-pointer" onClick={() => signOut()}>
             Logout
           </li>
         </ul>

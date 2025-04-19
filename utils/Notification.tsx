@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { toast, Bounce, ToastOptions } from 'react-toastify';
 
@@ -16,11 +16,11 @@ const toastConfig: ToastOptions = {
 type NotificationType = 'info' | 'success' | 'warning' | 'error' | 'default';
 
 const Notifications = (message: string | null = null, type: NotificationType = 'default'): void => {
-  if (!message) return;
+  if (message != null) return;
   toast(message, {
     ...toastConfig,
     type,
-    toastId: message,
+    ...(message != null ? { toastId: message } : {}),
   });
 };
 
