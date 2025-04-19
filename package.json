@@ -6,7 +6,8 @@
     "dev": "mongod --dbpath=./data & next dev --turbopack -p 8080",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -24,9 +25,22 @@
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22.13.14",
     "@types/react": "^19.0.12",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
     "tailwindcss": "^4",
     "typescript": "^5.8.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --max-warnings=0 --fix"
+    ],
+    "*.{ts,tsx}": [
+      "tsc --noEmit"
+    ]
   }
 }

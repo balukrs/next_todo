@@ -1,6 +1,7 @@
-import Header from "../../components/Header";
+import { ReactNode } from 'react';
+import Header from '@/components/Header';
 
-export default async function PrivateLayout({ children }) {
+export default async function PrivateLayout({ children }: { children: ReactNode }) {
   return (
     <div className="w-screen h-screen">
       <Header />

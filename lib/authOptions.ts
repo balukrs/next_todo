@@ -1,8 +1,8 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProviders from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import { connectMongoDB } from "./mongodb";
-import User from "../models/user";
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProviders from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
+import { connectMongoDB } from './mongodb';
+import User from '@/models/user';
 
 interface Credentials {
   email: string;
@@ -12,11 +12,11 @@ interface Credentials {
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProviders({
-      name: "credentials",
+      name: 'credentials',
       credentials: {},
-      async authorize(credentials: Credentials) {
+      async authorize(credentials) {
         try {
-          const { email, password } = credentials;
+          const { email, password } = credentials as Credentials;
           await connectMongoDB();
           const user = await User.findOne({ email });
 
@@ -38,10 +38,14 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
+    maxAge: 60 * 60 * 24 * 7,
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 7,
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/",
+    signIn: '/',
   },
 };

@@ -1,5 +1,5 @@
-import ListLayout from "../../../components/ListLayout";
-import AddTodo from "../../../components/AddTodo";
+import ListLayout from '@/components/ListLayout';
+import AddTodo from '@/components/AddTodo';
 
 function Home() {
   return (
