@@ -5,7 +5,7 @@ import { errorResponse } from './response';
 import { NextResponse } from 'next/server';
 
 const withAuthDB = (handler: (req: Request) => Promise<NextResponse>) => async (req: Request) => {
-  const authHeader = req.headers.get('Authorization');
+  const authHead = req.headers.get('Authorization');
 
   const session = await getServerSession(authOptions);
 
