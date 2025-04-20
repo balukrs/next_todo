@@ -3,9 +3,12 @@ import bcrypt from 'bcryptjs';
 import { connectMongoDB } from '../../../lib/mongodb';
 import User from '@/models/user';
 
-export async function POST(req: Request) {
+// Types
+import { FormTypes } from '@/types/register';
+
+export async function POST(req: Request): Promise<NextResponse> {
   try {
-    const { email, name, password } = await req.json();
+    const { email, name, password } = (await req.json()) as FormTypes;
     await connectMongoDB();
 
     const user = await User.findOne({ email }).select('_id');
@@ -18,7 +21,10 @@ export async function POST(req: Request) {
     await User.create({ email, name, password: hashedPassword });
     return NextResponse.json({ message: 'User Registered', success: true }, { status: 201 });
   } catch (error) {
-    if (error) console.log(error);
+    if (error instanceof Error) {
+      console.error(error);
+    } else console.error('Unknown Error');
+
     return NextResponse.json({ message: 'Error Occured', success: false }, { status: 500 });
   }
 }

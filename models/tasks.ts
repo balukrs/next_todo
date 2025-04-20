@@ -1,4 +1,4 @@
-import { Schema, model, models, Model, InferSchemaType } from "mongoose";
+import { Schema, model, models, Model, InferSchemaType } from 'mongoose';
 
 const todoSchema = new Schema(
   {
@@ -9,7 +9,7 @@ const todoSchema = new Schema(
     },
     description: {
       type: String,
-      default: "",
+      default: '',
       trim: true,
     },
     completed: {
@@ -29,16 +29,14 @@ const todoSchema = new Schema(
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
   },
   { timestamps: true }
 );
 
-type ToDoType = InferSchemaType<typeof todoSchema>;
+export type ToDoType = InferSchemaType<typeof todoSchema>;
 
-const Todo: Model<ToDoType> =
-  models.ToDo || model<ToDoType>("ToDo", todoSchema);
-
-export default Todo;
+export const Todo: Model<ToDoType> =
+  (models.ToDo as Model<ToDoType> | undefined) || model<ToDoType>('ToDo', todoSchema);

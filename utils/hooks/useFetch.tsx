@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import { ApiResponse } from '@/types/api';
 
-type ReturnType = {
+type ReturnType<T> = {
   isLoading: boolean;
-  fetchData: (url: string, options: object) => Promise<ApiResponse | null>;
+  fetchData: (url: string, options: object) => Promise<(ApiResponse & T) | null>;
   error: string | null;
 };
 
-export function useFetch(): ReturnType {
+export function useFetch<T>(): ReturnType<T> {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<null | string>(null);
 
-  const fetchData = async (url: string, options = {}): Promise<ApiResponse | null> => {
+  const fetchData = async (url: string, options = {}): Promise<(ApiResponse & T) | null> => {
     setIsLoading(true);
     setError(null);
 
     try {
       const response = await fetch(url, options);
 
-      const result = (await response.json()) as ApiResponse;
+      const result = (await response.json()) as ApiResponse & T;
       return result;
     } catch (err) {
       if (err instanceof Error) {

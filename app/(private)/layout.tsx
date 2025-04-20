@@ -1,7 +1,11 @@
 import { ReactNode } from 'react';
 import Header from '@/components/Header';
 
-export default async function PrivateLayout({ children }: { children: ReactNode }) {
+export default async function PrivateLayout({
+  children,
+}: {
+  children: ReactNode;
+}): Promise<React.ReactElement> {
   return (
     <div className="w-screen h-screen">
       <Header />

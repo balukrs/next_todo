@@ -1,7 +1,7 @@
 import ListLayout from '@/components/ListLayout';
 import AddTodo from '@/components/AddTodo';
 
-function Home() {
+function Home(): React.ReactElement {
   return (
     <div>
       <AddTodo />

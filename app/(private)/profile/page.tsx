@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 
-function Profile() {
+function Profile(): React.ReactElement {
   const { data: session } = useSession();
 
   return (

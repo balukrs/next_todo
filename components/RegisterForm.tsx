@@ -7,12 +7,8 @@ import { useFetch } from '../utils/hooks/useFetch';
 import { BeatLoader } from 'react-spinners';
 import Notifications from '../utils/Notification';
 
-type FormValues = {
-  password: string;
-  email: string;
-  name: string;
-  confirmPassword: string;
-};
+// Types
+import { FormTypes } from '@/types/register';
 
 function Register(): React.ReactElement {
   const router = useRouter();
@@ -23,11 +19,11 @@ function Register(): React.ReactElement {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormTypes>();
 
   const password = watch('password');
 
-  const onSubmit = async (data: FormValues): Promise<undefined> => {
+  const onSubmit = async (data: FormTypes): Promise<undefined> => {
     const { name, email, password, confirmPassword } = data;
     const response = await fetchData('api/register', {
       method: 'POST',
