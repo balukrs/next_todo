@@ -28,7 +28,7 @@ function Login(): React.ReactElement {
         redirect: false,
       });
 
-      if (response && response.error == null) {
+      if (response && response.error != null) {
         Notifications('Invalid Credentials', 'error');
         return;
       }

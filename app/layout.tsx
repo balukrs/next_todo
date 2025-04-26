@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { ToastContainer, Zoom } from 'react-toastify';
 import { AuthProvider } from './Providers';
 import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

@@ -16,7 +16,7 @@ const toastConfig: ToastOptions = {
 type NotificationType = 'info' | 'success' | 'warning' | 'error' | 'default';
 
 const Notifications = (message: string | null = null, type: NotificationType = 'default'): void => {
-  if (message != null) return;
+  if (message == null) return;
   toast(message, {
     ...toastConfig,
     type,
