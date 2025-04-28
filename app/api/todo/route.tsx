@@ -1,9 +1,9 @@
-import { connectMongoDB } from '@/lib/mongodb';
 import { getServerSession } from 'next-auth';
 import { Todo, ToDoType } from '@/models/tasks';
 import { successResponse, errorResponse, errorNotFoundResponse } from '@/utils/response';
 import withAuthDB from '@/utils/withAuthDb';
 import { authOptions } from '@/lib/authOptions';
+import paginationData from '@/utils/paginationQueryFn';
 
 export const POST = withAuthDB(async (req: Request) => {
   try {
@@ -13,7 +13,6 @@ export const POST = withAuthDB(async (req: Request) => {
     if (!title || title.trim() === '') {
       return errorNotFoundResponse({ message: 'Title is required' });
     }
-    await connectMongoDB();
     await Todo.create({ title, userId: session && session.user.id });
     return successResponse({ message: 'Task Created' }, 201);
   } catch (error) {
@@ -24,11 +23,16 @@ export const POST = withAuthDB(async (req: Request) => {
   }
 });
 
-export const GET = withAuthDB(async () => {
+export const GET = withAuthDB(async (req: Request) => {
   try {
-    await connectMongoDB();
-    const todos = await Todo.find().sort({ createdAt: -1 });
-    return successResponse({ message: 'Todos fetched', data: todos });
+    const { skip, count, totalPages, limit, page } = await paginationData(req, Todo);
+    const todos = await Todo.find().sort({ createdAt: -1 }).skip(skip).limit(limit);
+
+    return successResponse({
+      message: 'Todos fetched',
+      data: todos,
+      pagination: { page, limit, count, totalPages },
+    });
   } catch (error) {
     if (error instanceof Error) {
       console.error(error);
