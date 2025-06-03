@@ -1,14 +1,7 @@
 import { Model } from 'mongoose';
+import { pageParams } from '@/types/pagination';
 
-type paramTypes = {
-  skip: number;
-  count: number;
-  totalPages: number;
-  limit: number;
-  page: number;
-};
-
-const paginationData = async <T>(req: Request, fn: Model<T>): Promise<paramTypes> => {
+const paginationData = async <T>(req: Request, fn: Model<T>): Promise<pageParams> => {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get('page') ?? '1');
   const limit = parseInt(searchParams.get('limit') ?? '10');
